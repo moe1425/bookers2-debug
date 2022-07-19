@@ -21,13 +21,15 @@
              <% if @book.favorited_by?(current_user) %>
             <p>
               <%= link_to book_favorites_path(@book.id), method: :delete do %>
-                <i class="fas fa-heart text-danger"></i><%= @book.favorites.count %>
+                <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+                <%= @book.favorites.count %>
               <% end %>
             </p>
           <% else %>
             <p>
               <%= link_to book_favorites_path(@book.id), method: :post do %>
-                <i class="fas fa-heart text-primary"></i><%= @book.favorites.count %>
+                <i class="fas fa-heart text-primary"></i>
+                <%= @book.favorites.count %>
              <% end %>
             </p>
           <% end %>
@@ -70,8 +72,8 @@
       </div>
       <div class='comment'>
         <%= form_with model: [@book, @book_comment] do |f| %>
-          <%= f.text_area :comment, rows: "5", cols: "90" %>
-          <br><%= f.submit "送信" %>
+          <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100" %>
+          <br><%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
  　　   　 <% end %>
       </div>
     </div>
