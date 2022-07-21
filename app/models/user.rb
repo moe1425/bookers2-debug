@@ -7,6 +7,12 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+  # foreign_key（FK）には、@user.xxxとした際に「@user.idがfollower_idなのかfollowed_idなのか」を指定します。
+  has_many :followers, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  # そのユーザがフォローしている人orフォローされている人の一覧を出したい
+  has_many :following_users, through: :followers, source: :followed # 自分がフォローしている人
+  has_many :follower_users, through: :followings, source: :follower # 自分をフォローしている人
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
@@ -16,5 +22,18 @@ class User < ApplicationRecord
 
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
+  end
+
+  # フォローしたときの処理
+  def follow(user_id)
+    followers.create(followed_id: user_id)
+  end
+  # フォローを外すときの処理
+  def unfollow(user_id)
+    followers.find_by(followed_id: user_id).destroy
+  end
+  # フォローしていればtrueを返す
+  def following?(user)
+    following_users.include?(user)
   end
 end
