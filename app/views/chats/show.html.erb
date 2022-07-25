@@ -31,7 +31,11 @@
         <% end %>
       </table>
 
-      <%= form_with model: @chat, remote: true do |f| %>
+      <div class="errors">
+        <%= render "layouts/errors", obj: @chat %>
+      </div>
+
+      <%= form_with model: @chat, data: {remote: true} do |f| %>
         <%= f.text_field :message %>
         <%= f.hidden_field :room_id %>
         <%= f.submit "SEND", class:"btn btn-sm btn-success chat-btn" %>
