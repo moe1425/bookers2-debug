@@ -9,22 +9,29 @@
   </div>
 
   <!-- 評価 -->
-  <div class="form-group row" id="star">
-    <%= f.label :rate %>
-    <%= f.hidden_field :rate, id: :review_star %>
-  </div>
+  <% if book.id === nil %>
+    <div class="form-group" id="star">
+      <%= f.label :rate %>
+      <%= f.hidden_field :rate, id: :review_star, class:'form-control' %>
+    </div>
 
   <!-- 評価javascript -->
-  <script>
-    $('#star').raty({
-      size : 36,
-      starOff: '<%= asset_path('star-off.png') %>',
-      starOn : '<%= asset_path('star-on.png') %>',
-      starHalf: '<%= asset_path('star-half.png') %>',
-      scoreName: 'post[rate]',
-      half: true,
-    });
-  </script>
+    <script>
+    $(document).on('turbolinks:load', function() {
+      $('#star').empty();
+      $('#star').raty({
+        size     : 36,
+        starOff:  '<%= asset_path('star-off.png') %>',
+        starOn : '<%= asset_path('star-on.png') %>',
+        starHalf: '<%= asset_path('star-half.png') %>',
+        scoreName: 'book[rate]',
+        half: true,
+      });
+    })
+    </script>
+  <% else %>
+    <%= render "static_rate", book: book %>
+  <% end %>
 
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>

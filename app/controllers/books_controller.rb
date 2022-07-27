@@ -12,14 +12,18 @@ class BooksController < ApplicationController
   end
 
   def index
-    to  = Time.current.at_end_of_day
-    from  = (to - 6.day).at_beginning_of_day
-    @books = Book.includes(:favorited_users).
-      sort {|a,b|
-        b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
-        a.favorited_users.includes(:favorites).where(created_at: from...to).size
+    if params[:latest]
+      @books = Book.latest
+    elsif params[:star_count]
+      @books = Book.star_count
+    else
+      to  = Time.current.at_end_of_day
+      from  = (to - 6.day).at_beginning_of_day
+      @books = Book.all.sort {|a,b|
+        b.favorites.where(created_at: from...to).size <=>
+        a.favorites.where(created_at: from...to).size
       }
-    # @books = Book.all
+    end
     @book = Book.new
     @book_detail = @books
   end
@@ -62,6 +66,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :image)
+    params.require(:book).permit(:title, :body, :image, :rate)
   end
 end
