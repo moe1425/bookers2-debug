@@ -7,6 +7,10 @@
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
+  <div class="form_with">
+    <%= f.label "Tag" %>
+    <%= f.text_field :tag_name, class: 'form-control book_tag_name' %>
+  </div>
 
   <!-- 評価 -->
   <% if book.id === nil %>

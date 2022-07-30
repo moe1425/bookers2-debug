@@ -10,11 +10,16 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
-    <div class="col-md-8 offset-md-4">
-      <%= render 'layouts/search' %>
-    </div>
+    <!--<div class="col-md-8 offset-md-4">-->
+    <!--</div>-->
     <main>
-      <p id="notice"><%= notice %></p>
+       <p id="notice"><%= notice %></p>
+      <div class="container">
+        <div class="row justify-content-start mb-2">
+          <div class="mr-3"><%= render 'layouts/search' %></div>
+          <div class="mr-3"><%= render 'searches/tag_form' %></div>
+        </div>
+      </div>
       <%= yield %>
     </main>
     <%= render 'layouts/footer' %>

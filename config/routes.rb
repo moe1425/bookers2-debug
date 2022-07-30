@@ -3,6 +3,7 @@ Rails.application.routes.draw do
  devise_for :users
   root :to =>"homes#top"
   get "home/about"=>"homes#about"
+  get "search" => "searches#search"
 
   resources :users, only: [:index,:show,:edit,:update] do
     member do
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
    get 'chat/:id' => 'chats#show', as: 'chat'
    resources :chats, only: [:show, :create]
 
-  get "search" => "searches#search"
+  # get '/search', to: 'searches#search'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

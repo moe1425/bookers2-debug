@@ -2,44 +2,47 @@
   <!--検索対象モデルがUserの時 -->
   <% if @range == "User" %>
     <h3>Users search for "<%= @word %>"</h3>
-    <thead>
-      <tr>
-        <th>image</th>
-        <th>name</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td>
-            <p><%= image_tag user.get_profile_image, size:"50x50" %></p>
-          </td>
-          <td><%= user.name %></td>
-          <td><%= link_to 'Show', user %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  <% else %>
+    <%= render 'users/index', users: @records %>
+    <!--<thead>-->
+    <!--  <tr>-->
+    <!--    <th>image</th>-->
+    <!--    <th>name</th>-->
+    <!--    <th colspan="3"></th>-->
+    <!--  </tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--  % @users.each do |user| %>-->
+    <!--    <tr>-->
+    <!--      <td>-->
+    <!--        <p>%= image_tag user.get_profile_image, size:"50x50" %></p>-->
+    <!--      </td>-->
+    <!--      <td>%= user.name %></td>-->
+    <!--      <td>%= link_to 'Show', user %></td>-->
+    <!--    </tr>-->
+    <!--  % end %>-->
+    <!--</tbody>-->
+  <% elsif @range == 'book' || @range == 'tag' %>
     <!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
     <h3>Books search for "<%= @word %>"</h3>
-    <thead>
-      <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Opinion</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @books.each do |book| %>
-        <tr>
-          <td>
-            <p><%= image_tag book.user.get_profile_image, size:"50x50" %></p>
-          </td>
-          <td><%= book.title %></td>
-          <td><%= book.body %></td>
-        </tr>
-      </tbody>
-    <% end %>
+    <%= render 'books/index', books: @records %>
+    <!--  <tr>-->
+    <!--    <th></th>-->
+    <!--    <th>Title</th>-->
+    <!--    <th>Opinion</th>-->
+    <!--    <th>Tag</th>-->
+    <!--  </tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--  % @books.each do |book| %>-->
+    <!--    <tr>-->
+    <!--      <td>-->
+    <!--        <p>%= image_tag book.user.get_profile_image, size:"50x50" %></p>-->
+    <!--      </td>-->
+    <!--      <td>%= book.title %></td>-->
+    <!--      <td>%= book.body %></td>-->
+    <!--      <td>%= book.category %></td>-->
+    <!--    </tr>-->
+    <!--  </tbody>-->
+    <!--% end %>-->
   <% end %>
 </table>
